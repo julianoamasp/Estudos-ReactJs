@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- 
+        O jsx usa camelcase como convenção por exemplo se o atributo for composto por dois nomes automaticamente o segundo nome tera a letrar maiúscula exemplo "onClick"
+    -->
+    <!--        
+        O Babel compila JSX para chamadas React.createElement().
+
+        Estes dois exemplos são idênticos:
+
+        const element = (
+          <h1 className="greeting">
+            Hello, world!
+          </h1>
+        );
+        const element = React.createElement(
+          'h1',
+          {className: 'greeting'},
+          'Hello, world!'
+        );
+        React.createElement() realiza algumas verificações para ajudar você a criar um código sem bugs, mas, essencialmente, cria um objeto como este:
+      
+        // Nota: esta estrutura está simplificada
+        const element = {
+          type: 'h1',
+          props: {
+            className: 'greeting',
+            children: 'Hello, world!'
+          }
+        };
+     -->
+    <script type="text/babel">
+    function formatarNome(usuario){
+        return usuario.nome + " " + usuario.segundoNome;
+    }
+    const usuario = {
+        nome: "Juliano",
+        segundoNome : "da Silva"
+    }
+        class Menu extends React.Component{ 
+            render(){ 
+                return (
+                <div className="menu">
+                    Olá, {formatarNome(usuario)}!
+                </div>
+        ) } } ReactDOM.render(
+        <Menu />,document.getElementById("app"));
+    </script>
+</body>
+
+</html>

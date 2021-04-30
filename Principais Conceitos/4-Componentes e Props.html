@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style>
+    .class-chatContainer-chat {
+        width: 100%;
+        background-color: #ff9800;
+        display: grid;
+        border-radius: 5px;
+    }
+
+    .class-header-chat {
+        padding: 10px;
+        border-bottom: 1px solid #f5b24f;
+        color: #ffffff;
+        font-size: 25px;
+    }
+
+    .class-contatoContainer-chat {
+        display: grid;
+        grid-template-columns: 25% 75%;
+        height: 400px;
+    }
+
+    .class-msgsContainer-chat {
+        display: grid;
+        grid-template-rows: 90% 10%;
+        height: 400px;
+    }
+
+    .class-msgContainer-chat {
+        background-color: #ffcc81;
+        box-shadow: inset 1px 1px 5px 1px #00000070;
+        overflow-y: scroll;
+    }
+
+    .class-envioContainer-chat {
+        display: grid;
+        grid-template-columns: 80% 20%;
+    }
+
+    .class-envioContainer-chat input {
+        border: 1px solid #ff9800;
+    }
+
+    .class-envioContainer-chat button {
+        border: 1px solid #ff9800;
+        background-color: #ff9800;
+        color: #ffff;
+        font-size: 20px;
+    }
+
+    .class-header-chat img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50px;
+        margin-right: 10px;
+    }
+
+    .class-contato-chat img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50px;
+        margin-right: 10px;
+    }
+
+    .class-contato-chat {
+        background-color: #ffb64a;
+        margin: 10px;
+        border-radius: 5px;
+        padding: 5px;
+        color: #ffff;
+    }
+</style>
+
+<body>
+    <h2>Imprimindo função react</h2>
+    <div id="olafuncao"></div>
+
+    <h2>Iprimindo class react</h2>
+    <div id="olaclasse"></div>
+
+    <h2>Mini Aplicativo</h2>
+    <div id="chat"></div>
+
+
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- 
+        -- Conceitualmente, componentes são como funções JavaScript. Eles aceitam entradas arbitrárias (chamadas “props”) e retornam elementos React que descrevem o que deve aparecer na tela.
+        -- Nota: Sempre inicie os nomes dos componentes com uma letra maiúscula.
+     -->
+
+
+    <script type="text/babel">
+        //A maneira mais simples de definir um componente é escrever uma função JavaScript:
+        function OlaFuncao(props) {
+            return <p>Ola, {props.nome}, print usando função</p>;
+        }
+
+        class OlaClass extends React.Component {
+            render() {
+                return (<p>
+                    <p>Ola, {this.props.nome}, print usando classe</p>
+                    <OlaFuncao nome="juliano" />
+                </p>)
+            }
+        }
+
+        //renderizando função
+        ReactDOM.render(<OlaFuncao nome="Juliano" />, document.querySelector("#olafuncao"));
+
+        //renderizando classe
+        ReactDOM.render(<OlaClass nome="juliano" />, document.querySelector("#olaclasse"));
+
+        //mni aplicação de componentes chamando componenetes
+        function HeaderChat(props) {
+            return <div className="class-header-chat"><img src={props.usuario.img} />{props.usuario.nome}</div>;
+        }
+
+
+
+
+
+        function ListaChat(props) {
+            function selecionar(e) {
+                e.preventDefault();
+                /*
+                const novo = (
+                    <div className="class-contatosContainer-chat">
+                    {
+                        props.contatos.map((contato) =>
+                            <div className="class-msgMe-chat">
+                                <img src={contato.img} />
+                                {contato.nome}
+                            </div>
+                        )
+                    }
+                </div>
+                )
+                */
+                console.log(e.target.getAttribute("data-id"));
+                ReactDOM.render(<MensagensChat />, document.querySelector("#chatMsgs"));
+            }
+            const contatos = (
+                <div className="class-contatosContainer-chat">
+                    {
+                        props.chat.contatos.map((contato) =>
+                            <div data-id={contato.id} onClick={selecionar} className="class-contato-chat">
+                                <img src={contato.img} />
+                                {contato.nome}
+                            </div>
+                        )
+                    }
+                </div>
+            );
+
+            return <div className="class-contatos-chat">
+                {contatos}
+            </div>;
+        }
+
+
+
+
+        class MensagensChat extends React.Component {
+            render() {
+                return (<div className="class-msgsContainer-chat">
+                    <div className="class-msgContainer-chat">
+                    </div>
+                    <div className="class-envioContainer-chat">
+                        <input type="text" /><button>Enviar</button>
+                    </div>
+                </div>
+                )
+            }
+        }
+        class Chat extends React.Component {
+            constructor() {
+                super();
+                this.state = {
+                    chat: {
+                        usuario: {
+                            nome: "Juliano",
+                            img: "https://image.freepik.com/vetores-gratis/perfil-de-avatar-de-homem-no-icone-redondo_24640-14044.jpg"
+                        },
+                        contatos: [
+                            {
+                                id: 1,
+                                nome: "Fabiana",
+                                img: "https://image.freepik.com/vetores-gratis/perfil-de-avatar-de-mulher-no-icone-redondo_24640-14042.jpg",
+                                msg: [
+                                    {
+                                        msg: "Como vai?",
+                                        tipo: "enviado"
+                                    }
+                                ]
+                            },
+                            {
+                                id: 2,
+                                nome: "Renato",
+                                img: "https://image.freepik.com/vetores-gratis/perfil-de-avatar-de-homem-no-icone-redondo_24640-14044.jpg",
+                                msgs: [
+                                    {
+                                        msg: "Como vai?",
+                                        tipo: "enviado"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                }
+            }
+            render() {
+                return (<div className="class-chatContainer-chat">
+                    <HeaderChat chat={this.state.chat} />
+                    <div className="class-contatoContainer-chat">
+                        <ListaChat contatos={this.state.chat.contatos} />
+                        <div id="chatMsgs">
+                        <MensagensChat msgs={this.state.chat.contatos} />
+                        </div>
+                    </div>
+                </div>)
+            }
+        }
+        ReactDOM.render(<Chat />, document.querySelector("#chat"));
+    </script>
+</body>
+
+</html>

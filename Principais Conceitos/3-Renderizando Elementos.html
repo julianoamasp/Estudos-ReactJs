@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div id="menu"></div>
+
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- 
+        Elementos React são imutáveis. Uma vez criados, você não pode alterar seus elementos filhos ou atributos.
+        Com o que aprendemos até agora, a única forma de atualizar a interface é criar um novo elemento e passá-lo para ReactDOM.render().
+     -->
+
+     
+    <script type="text/babel">
+    //função com chamada do próprio componte internamente
+        function temporizador(){ 
+            const elemento = (                
+                <div className="menu">
+                    Agora são {new Date().toLocaleTimeString()}
+                </div>
+        );
+        ReactDOM.render(elemento, document.getElementById('menu'));
+        }
+
+        //fico renderizando o componente, lembrando q setinterval chama método sem parenteses
+        setInterval(temporizador, 1000);
+    </script>
+</body>
+
+</html>
